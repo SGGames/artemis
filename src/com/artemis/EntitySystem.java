@@ -31,6 +31,15 @@ public abstract class EntitySystem implements EntityObserver {
 		systemIndex = SystemIndexManager.getIndexFor(this.getClass());
 	}
 	
+	
+	/**
+	 * libgdx integration for disposable classes.
+	 */
+	public void dispose()
+	{
+	   
+	}
+	
 	/**
 	 * Called before processing of entities begins. 
 	 */
