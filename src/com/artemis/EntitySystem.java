@@ -201,6 +201,10 @@ public abstract class EntitySystem implements EntityObserver {
 		this.passive = passive;
 	}
 	
+	public ImmutableBag<Entity> getActives() {
+		return actives;
+	}
+	
 	
 	
 	/**
