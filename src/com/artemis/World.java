@@ -35,6 +35,12 @@ public class World {
 	
 	private Map<Class<?>, EntitySystem> systems;
 	private Bag<EntitySystem> systemsBag;
+	
+	private Performer mAddedPerformer;
+	private Performer mChangedPerformer;
+	private Performer mDisabledPerformer;
+	private Performer mEnabledPerformer;
+	private Performer mDeletedPerformer;
 
 	public World() {
 		managers = new HashMap<Class<? extends Manager>, Manager>();
@@ -54,6 +60,43 @@ public class World {
 		
 		em = new EntityManager();
 		setManager(em);
+		
+		mAddedPerformer = new Performer() {
+         @Override
+         public void perform(EntityObserver observer, Entity e) {
+            observer.added(e);
+         }
+      };
+      
+      mChangedPerformer = new Performer() {
+         @Override
+         public void perform(EntityObserver observer, Entity e) {
+            observer.changed(e);
+         }
+      };
+      
+      mDisabledPerformer = new Performer() {
+         @Override
+         public void perform(EntityObserver observer, Entity e) {
+            observer.disabled(e);
+         }
+      };
+      
+      mEnabledPerformer = new Performer() {
+         @Override
+         public void perform(EntityObserver observer, Entity e) {
+            observer.enabled(e);
+         }
+      };
+      
+      mDeletedPerformer = new Performer() {
+         @Override
+         public void perform(EntityObserver observer, Entity e) {
+            observer.deleted(e);
+         }
+      };
+      
+		
 	}
 
 	
@@ -311,40 +354,11 @@ public class World {
 	 * Process all non-passive systems.
 	 */
 	public void process() {
-		check(added, new Performer() {
-			@Override
-			public void perform(EntityObserver observer, Entity e) {
-				observer.added(e);
-			}
-		});
-		
-		check(changed, new Performer() {
-			@Override
-			public void perform(EntityObserver observer, Entity e) {
-				observer.changed(e);
-			}
-		});
-		
-		check(disable, new Performer() {
-			@Override
-			public void perform(EntityObserver observer, Entity e) {
-				observer.disabled(e);
-			}
-		});
-		
-		check(enable, new Performer() {
-			@Override
-			public void perform(EntityObserver observer, Entity e) {
-				observer.enabled(e);
-			}
-		});
-		
-		check(deleted, new Performer() {
-			@Override
-			public void perform(EntityObserver observer, Entity e) {
-				observer.deleted(e);
-			}
-		});
+		check(added, mAddedPerformer);
+		check(changed, mChangedPerformer);
+		check(disable, mDisabledPerformer);
+		check(enable, mEnabledPerformer);
+		check(deleted, mDeletedPerformer);
 		
 		cm.clean();
 		
