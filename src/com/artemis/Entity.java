@@ -13,7 +13,7 @@ import com.artemis.utils.Bag;
  * 
  */
 public final class Entity {
-	private UUID uuid;
+//	private UUID uuid;
 
 	private int id;
 	private BitSet componentBits;
@@ -68,7 +68,7 @@ public final class Entity {
 	protected void reset() {
 		systemBits.clear();
 		componentBits.clear();
-		uuid = UUID.randomUUID();
+//		uuid = UUID.randomUUID();
 	}
 
 	@Override
@@ -244,9 +244,9 @@ public final class Entity {
 	 * This UUID is unique per entity (re-used entities get a new UUID).
 	 * @return uuid instance for this entity.
 	 */
-	public UUID getUuid() {
-		return uuid;
-	}
+//	public UUID getUuid() {
+//		return uuid;
+//	}
 
 	/**
 	 * Returns the world this entity belongs to.
