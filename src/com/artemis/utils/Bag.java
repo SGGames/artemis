@@ -200,7 +200,7 @@ public class Bag<E> implements ImmutableBag<E> {
 		if(index >= data.length) {
 			grow(index*2);
 		}
-		size = index+1;
+		size = Math.max(size,index+1);
 		data[index] = e;
 	}
 
